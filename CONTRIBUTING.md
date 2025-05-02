@@ -33,6 +33,10 @@ Para gerar um build reutilizável por outras aplicações, é necessário public
         </repository>
     </distributionManagement>
     ```
-1. Estando tudo configurado corretamente, agora execute `mvn clean deploy`, o maven vai rodar os testes automátizados e conseguindo gerar o build, a aplicação vai estar disponível para ser usado como dependência em outras aplicações;
+### Deploy do package
+Estando tudo configurado corretamente, basta executar: ```mvn clean deploy```, o maven vai rodar os testes automatizados, se não houver nenhuma falha, vai gerar o build e a aplicação será enviada para o GitHub packages, sendo assim disponibilizada para ser usado como dependência em outras aplicações.
 
-
+### Testes automatizados
+Para executar os testes automátizados, basta executar `mvn clean test`.
+#### Cobertura de testes
+Para testar a cobertura de testes, execute: `mvn verify`, feito isso var ser gera o arquivo de análise em: [/target/site/jacoco/index.html](./target/site/jacoco/index.html), caso não tenha sido gerado o arquivo, pode tentar executar `mvn clean test jacoco:report`.
