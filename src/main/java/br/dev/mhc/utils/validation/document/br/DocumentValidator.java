@@ -7,6 +7,10 @@ public class DocumentValidator {
     private static final int[] weightSsn = {11, 10, 9, 8, 7, 6, 5, 4, 3, 2};
     private static final int[] weightTin = {6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2};
 
+    private DocumentValidator() {
+        throw new UnsupportedOperationException("Utility class");
+    }
+
     private static int calculate(final String str, final int[] weight) {
         int sum = 0;
         for (int i = str.length() - 1, digit; i >= 0; i--) {

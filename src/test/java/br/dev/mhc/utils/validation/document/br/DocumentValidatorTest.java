@@ -4,10 +4,21 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class DocumentValidatorTest {
+
+    @Test
+    void constructorShouldThrowException() throws Exception {
+        Constructor<DocumentValidator> constructor = DocumentValidator.class.getDeclaredConstructor();
+        constructor.setAccessible(true);
+        InvocationTargetException exception = assertThrows(InvocationTargetException.class, constructor::newInstance);
+        assertInstanceOf(UnsupportedOperationException.class, exception.getCause());
+        assertEquals("Utility class", exception.getCause().getMessage());
+    }
 
     @ParameterizedTest
     @ValueSource(strings = {
@@ -30,7 +41,7 @@ public class DocumentValidatorTest {
             "69705686000112",
             "82033498000153",
             "45770581000189",
-            "12345666666",
+            "12345678900",
             "22222222222",
             "abc",
             ""
@@ -79,7 +90,7 @@ public class DocumentValidatorTest {
             "27062024082",
             "54441202083",
             "71557478000100",
-            "12281852000100",
+            "11111111111111",
             "abc",
             ""
     })
@@ -97,7 +108,7 @@ public class DocumentValidatorTest {
             "45.770.581/0001-89"
     })
     void isValidCNPJ_whenCnpjIsValidButNonNormalized_shouldReturnFalse(String cnpj) {
-        assertFalse(DocumentValidator.isValidCPF(cnpj), "CNPJ non normalized should be invalid: " + cnpj);
+        assertFalse(DocumentValidator.isValidCNPJ(cnpj), "CNPJ non normalized should be invalid: " + cnpj);
     }
 
     @Test
